@@ -1,0 +1,15 @@
+C:\Users\maria\OneDrive\Documentos\Advent of Code\2023\day2\bin\Debug\net6.0\day2.exe
+C:\Users\maria\OneDrive\Documentos\Advent of Code\2023\day2\bin\Debug\net6.0\day2.deps.json
+C:\Users\maria\OneDrive\Documentos\Advent of Code\2023\day2\bin\Debug\net6.0\day2.runtimeconfig.json
+C:\Users\maria\OneDrive\Documentos\Advent of Code\2023\day2\bin\Debug\net6.0\day2.dll
+C:\Users\maria\OneDrive\Documentos\Advent of Code\2023\day2\bin\Debug\net6.0\day2.pdb
+C:\Users\maria\OneDrive\Documentos\Advent of Code\2023\day2\obj\Debug\net6.0\day2.csproj.AssemblyReference.cache
+C:\Users\maria\OneDrive\Documentos\Advent of Code\2023\day2\obj\Debug\net6.0\day2.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\maria\OneDrive\Documentos\Advent of Code\2023\day2\obj\Debug\net6.0\day2.AssemblyInfoInputs.cache
+C:\Users\maria\OneDrive\Documentos\Advent of Code\2023\day2\obj\Debug\net6.0\day2.AssemblyInfo.cs
+C:\Users\maria\OneDrive\Documentos\Advent of Code\2023\day2\obj\Debug\net6.0\day2.csproj.CoreCompileInputs.cache
+C:\Users\maria\OneDrive\Documentos\Advent of Code\2023\day2\obj\Debug\net6.0\day2.dll
+C:\Users\maria\OneDrive\Documentos\Advent of Code\2023\day2\obj\Debug\net6.0\refint\day2.dll
+C:\Users\maria\OneDrive\Documentos\Advent of Code\2023\day2\obj\Debug\net6.0\day2.pdb
+C:\Users\maria\OneDrive\Documentos\Advent of Code\2023\day2\obj\Debug\net6.0\day2.genruntimeconfig.cache
+C:\Users\maria\OneDrive\Documentos\Advent of Code\2023\day2\obj\Debug\net6.0\ref\day2.dll

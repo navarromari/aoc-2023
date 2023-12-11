@@ -1,13 +1,13 @@
 ﻿string path = @"C:\Users\maria\OneDrive\Documentos\Advent of Code\2023\day3\input.txt";
 
-List<int> partNumbers = new List<int>();
+Dictionary<string, List<int>> gearParts = new Dictionary<string, List<int>>();
 
 bool isSymbol(char c)
 {
     if(int.TryParse(c.ToString(), out _) || c == '.')
     {
         return false;
-    }
+    } 
 
     return true;
 }
@@ -32,100 +32,155 @@ if (File.Exists(path))
         }
 
         string number = "";
-        bool isPartNumber = false;
 
-        for (i = 0; i < width; i++)
+        for (i = 0; i < height; i++)
         {
-            for (int j = 0; j < height; j++)
+            for (int j = 0; j < width; j++)
             {
-                if (int.TryParse(matrix[i, j].ToString(), out _))
+                if (int.TryParse(matrix[i, j].ToString(), out _) && j < width - 1)
                 {   
                     number += matrix[i, j];
-
-                    if (i == 0)
-                    {
-                        if (j == 0)
-                        {
-                            if (isSymbol(matrix[i + 1, j]) || isSymbol(matrix[i, j + 1]) || isSymbol(matrix[i + 1, j + 1]))
-                            {
-                                isPartNumber = true;
-                            }
-                        }
-                        else if (j == width - 1)
-                        {
-                            if (isSymbol(matrix[i + 1, j]) || isSymbol(matrix[i, j - 1]) || isSymbol(matrix[i + 1, j - 1]))
-                            {
-                                isPartNumber = true;
-                            }
-                        }
-                        else
-                        {
-                            if (isSymbol(matrix[i, j + 1]) || isSymbol(matrix[i, j - 1]) || isSymbol(matrix[i + 1, j]) || isSymbol(matrix[i + 1, j - 1]) || isSymbol(matrix[i + 1, j + 1]))
-                            {
-                                isPartNumber = true;
-                            }
-                        }
-                    }
-                    else if (i == height - 1)
-                    {
-                        if (j == 0)
-                        {
-                            if (isSymbol(matrix[i - 1, j]) || isSymbol(matrix[i, j + 1]) || isSymbol(matrix[i - 1, j + 1]))
-                            {
-                                isPartNumber = true;
-                            }
-                        }
-                        else if (j == width - 1)
-                        {
-                            if (isSymbol(matrix[i - 1, j]) || isSymbol(matrix[i, j - 1]) || isSymbol(matrix[i - 1, j - 1]))
-                            {
-                                isPartNumber = true;
-                            }
-                        }
-                        else
-                        {
-                            if (isSymbol(matrix[i - 1, j]) || isSymbol(matrix[i, j + 1]) || isSymbol(matrix[i, j - 1]) || isSymbol(matrix[i - 1, j - 1]) || isSymbol(matrix[i - 1, j + 1]))
-                            {
-                                isPartNumber = true;
-                            }
-                        }
-                    }
-                    else if (j == 0)
-                    {
-                        if (isSymbol(matrix[i, j + 1]) || isSymbol(matrix[i - 1, j]) || isSymbol(matrix[i + 1, j]))
-                        {
-                            isPartNumber = true;
-                        }
-                    }
-                    else if (j == width - 1)
-                    {
-                        if (isSymbol(matrix[i - 1, j]) || isSymbol(matrix[i + 1, j]) || isSymbol(matrix[i, j - 1]))
-                        {
-                            isPartNumber = true;
-                        }
-                    }
-                    else
-                    {
-                        if (isSymbol(matrix[i, j - 1]) || isSymbol(matrix[i, j + 1]) || isSymbol(matrix[i - 1, j]) || isSymbol(matrix[i + 1, j]) || isSymbol(matrix[i - 1, j + 1]) || isSymbol(matrix[i - 1, j - 1]) || isSymbol(matrix[i + 1, j - 1]) || isSymbol(matrix[i + 1, j + 1]))
-                        {
-                            isPartNumber = true;
-                        }
-                    }
-
                 }
                 else
                 {
-                    if (isPartNumber)
+                    if(int.TryParse(matrix[i, j].ToString(), out _))
                     {
-                        partNumbers.Add(int.Parse(number));
+                        number += matrix[i, j];
                     }
 
-                    number = "";
-                    isPartNumber = false;
+                    if (number != "")
+                    {
+                        int startIndex = j - number.Length;
 
+                        if (i == 0)
+                        {
+
+                            for(int k = (startIndex > 0 ? startIndex - 1 : startIndex); k < (startIndex + number.Length  > width ? startIndex + number.Length : startIndex + number.Length + 1); k++)
+                            {
+                                if (matrix[i + 1, k] == '*')
+                                {
+                                    if (gearParts.ContainsKey("i:" + (i + 1).ToString() + "j:" +  k.ToString()))
+                                    {
+
+                                        gearParts["i:" + (i + 1).ToString() + "j:" + k.ToString()].Add(int.Parse(number));
+                                    }
+                                    else
+                                    {
+                                        gearParts.Add("i:" + (i + 1).ToString() + "j:" + k.ToString(), new List<int>{int.Parse(number)});
+                                    }
+                                }
+
+                                if (matrix[i, k] == '*')
+                                {
+                                    if (gearParts.ContainsKey("i:" + (i + 1).ToString() + "j:" + k.ToString()))
+                                    {
+                                        gearParts["i:" + i.ToString() + "j:" + k.ToString()].Add(int.Parse(number));
+                                    }
+                                    else
+                                    {
+                                        gearParts.Add("i:" + i.ToString() + "j:" + k.ToString(), new List<int> { int.Parse(number) });
+                                    }
+                                }
+
+                            }
+                        }
+                        else if (i == height - 1)
+                        {
+                            for (int k = (startIndex > 0 ? startIndex - 1 : startIndex); k < (startIndex + number.Length > width ? startIndex + number.Length : startIndex + number.Length + 1); k++)
+                            {
+                                if (matrix[i - 1, k] == '*')
+                                {
+                                    if (gearParts.ContainsKey("i:" + (i - 1).ToString() + "j:" + k.ToString()))
+                                    {
+                                        gearParts["i:" + (i - 1).ToString() + "j:" + k.ToString()].Add(int.Parse(number));
+                                    }
+                                    else
+                                    {
+                                        gearParts.Add("i:" + (i - 1).ToString() + "j:" + k.ToString(), new List<int> { int.Parse(number) });
+                                    }
+                                }
+
+                                if (matrix[i, k] == '*')
+                                {
+                                    if (gearParts.ContainsKey("i:" + i.ToString() + "j:" + k.ToString()))
+                                    {
+                                        gearParts["i:" + i.ToString() + "j:" + k.ToString()].Add(int.Parse(number));
+                                    }
+                                    else
+                                    {
+                                        gearParts.Add("i:" + i.ToString() + "j:" + k.ToString(), new List<int> { int.Parse(number) });
+                                    }
+                                }
+
+                            }
+                        }
+                        else
+                        {
+                            for (int k = (startIndex > 0 ? startIndex - 1 : startIndex); k < (startIndex + number.Length > width ? startIndex + number.Length : startIndex + number.Length + 1); k++)
+                            {
+                                if (matrix[i + 1, k] == '*')
+                                {
+                                    if (gearParts.ContainsKey("i:" + (i + 1).ToString() + "j:" + k.ToString()))
+                                    {
+                                        gearParts["i:" + (i + 1).ToString() + "j:" + k.ToString()].Add(int.Parse(number));
+                                    }
+                                    else
+                                    {
+                                        gearParts.Add("i:" + (i + 1).ToString() + "j:" + k.ToString(), new List<int> { int.Parse(number) });
+                                    }
+                                }
+
+                                if (matrix[i - 1, k] == '*')
+                                {
+                                    if (gearParts.ContainsKey("i:" + (i - 1).ToString() + "j:" + k.ToString()))
+                                    {
+                                        gearParts["i:" + (i - 1).ToString() + "j:" + k.ToString()].Add(int.Parse(number));
+                                    }
+                                    else
+                                    {
+                                        gearParts.Add("i:" + (i - 1).ToString() + "j:" + k.ToString(), new List<int> { int.Parse(number) });
+                                    }
+                                }
+
+                                if (matrix[i, k] == '*')
+                                {
+                                    if (gearParts.ContainsKey("i:" + i.ToString() + "j:" + k.ToString()))
+                                    {
+                                        gearParts["i:" + i.ToString() + "j:" + k.ToString()].Add(int.Parse(number));
+                                    }
+                                    else
+                                    {
+                                        gearParts.Add("i:" + i.ToString() + "j:" + k.ToString(), new List<int> { int.Parse(number) });
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+
+                    number = "";               
                 }
             }
         }
+
+        List<int> ratios = new List<int>(); 
+
+        foreach (KeyValuePair<string, List<int>> kvp in gearParts)
+        {
+            int result = 1;
+
+            if (kvp.Value.Count() == 2)
+            {
+                foreach(int value in kvp.Value)
+                {
+                    result *= value;
+                }
+
+                ratios.Add(result);
+            }
+        }
+
+        Console.WriteLine(ratios.Sum());
     }
 }
 else
@@ -133,4 +188,3 @@ else
     Console.WriteLine("File Not Found");
 }
 
-Console.WriteLine("total " + partNumbers.Sum());
